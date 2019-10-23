@@ -3,7 +3,7 @@ FROM openshift/base-centos7
 MAINTAINER Martin Rumanek <martin@rumanek.cz>
 ENV GRADLE_VERSION=2.12
 ENV TOMCAT_MAJOR 9
-ENV TOMCAT_VERSION 9.0.21
+ENV TOMCAT_VERSION 9.0.27
 ENV CATALINA_HOME /usr/local/tomcat
 ENV JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
 
