@@ -58,6 +58,6 @@ services:
       - POSTGRES_PASSWORD=fedoraAdmin
       - POSTGRES_DB=riTriples
   solr:
-    image: moravianlibrary/solr6
+    image: moravianlibrary/solr:6.3.0
 volumes:
   k5init:
