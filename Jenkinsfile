@@ -5,7 +5,7 @@ node {
 		dir("${env.WORKSPACE}") {
 			checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/achmelo/s2i-kramerius.git']]])
 			sh 'docker build -t kramerius-builder .'
-			s2i build --incremental=true --exclude="" https://github.com/moravianlibrary/kramerius.git kramerius-builder harbor.nkp.cz:30004/library/kramerius -r master
+			s2i build --incremental=true --exclude="" https://github.com/moravianlibrary/kramerius.git kramerius-builder library/kramerius -r master
 		}
 	}	
 	stage('Push Images'){
