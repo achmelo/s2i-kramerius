@@ -1,0 +1,65 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: fedora-postgres-pv
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-storage
+  local:
+    path: /data
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - docker02
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: kramerius-postgres-pv
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-storage
+  local:
+    path: /data
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - docker02
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ri-triples-postgres-pv
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-storage
+  local:
+    path: /data
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - docker02

@@ -1,0 +1,156 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fedora-postgres
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+     run: fedora-postgres
+  template:
+    metadata:
+      labels:
+        run: fedora-postgres
+    spec:
+      nodeName: docker02
+      containers:
+      - image: postgres:9.6
+        name: fedora-postgres
+        env:
+        - name: POSTGRES_USER
+          value: fedoraAdmin
+        - name: POSTGRES_PASSWORD
+          value: fedoraAdmin
+        - name: POSTGRES_DB
+          value: fedora3
+        ports:
+        - containerPort: 5432
+          name: sql
+        volumeMounts:
+        - name: fedora-postgres-pv
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: fedora-postgres-pv
+        emptyDir: {}
+---
+apiVersion: v1               
+kind: Service                
+metadata:                    
+  name: fedora-postgres 
+  labels:                    
+    run: fedora-postgres
+spec:                        
+  type: ClusterIP
+  selector:                   
+    run: fedora-postgres
+  ports:                     
+  - name: http               
+    port: 5432               
+    targetPort: 5432
+    protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kramerius-postgres
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+     run: kramerius-postgres
+  template:
+    metadata:
+      labels:
+        run: kramerius-postgres
+    spec:
+      nodeName: docker02
+      containers:
+      - image: postgres:9.6
+        name: kramerius-postgres
+        env:
+        - name: POSTGRES_USER
+          value: fedoraAdmin
+        - name: POSTGRES_PASSWORD
+          value: fedoraAdmin
+        - name: POSTGRES_DB
+          value: kramerius
+        ports:
+        - containerPort: 5432
+          name: sql
+        volumeMounts:
+        - name: kramerius-postgres-pv
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: kramerius-postgres-pv
+        emptyDir: {}
+---
+apiVersion: v1               
+kind: Service                
+metadata:                    
+  name: kramerius-postgres 
+  labels:                    
+    run: kramerius-postgres
+spec:                        
+  type: ClusterIP
+  selector:                   
+    run: kramerius-postgres
+  ports:                     
+  - name: http               
+    port: 5432               
+    targetPort: 5432
+    protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ri-triples-postgres
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+     run: ri-triples-postgres
+  template:
+    metadata:
+      labels:
+        run: ri-triples-postgres
+    spec:
+      nodeName: docker02
+      containers:
+      - image: postgres:9.6
+        name: ri-triples-postgres
+        env:
+        - name: POSTGRES_USER
+          value: fedoraAdmin
+        - name: POSTGRES_PASSWORD
+          value: fedoraAdmin
+        - name: POSTGRES_DB
+          value: riTriples
+        ports:
+        - containerPort: 5432
+          name: sql
+        volumeMounts:
+        - name: ri-triples-postgres-pv
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: ri-triples-postgres-pv
+        emptyDir: {}
+---
+apiVersion: v1               
+kind: Service                
+metadata:                    
+  name: ri-triples-postgres 
+  labels:                    
+    run: ri-triples-postgres
+spec:                        
+  type: ClusterIP
+  selector:                   
+    run: ri-triples-postgres
+  ports:                     
+  - name: http               
+    port: 5432               
+    targetPort: 5432
+    protocol: TCP

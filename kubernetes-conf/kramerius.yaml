@@ -1,0 +1,76 @@
+---           
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kramerius
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+     run: kramerius
+  template:
+    metadata:
+      labels:
+        run: kramerius
+    spec:
+      nodeName: docker02
+      containers:
+      - name: kramerius
+        image: harbor.nkp.cz:30004/library/kramerius:latest   
+        env:
+          - name: "fedoraHost"
+            value: "http://fcrepo:8080/fedora"
+          - name: "fedoraUser"
+            value: "fedoraAdmin"
+          - name: "fedoraPass"
+            value: "fedoraAdmin"
+          - name: "fedora3_connectionURL"
+            value: "jdbc:postgresql://fedora-postgres:5432/fedora3"
+          - name: "fedora3_connectionUser"
+            value: "fedoraAdmin"
+          - name: "fedora3_connectionPass"
+            value: "fedoraAdmin"
+          - name: "kramerius_connectionURL"
+            value: "jdbc:postgresql://kramerius-postgres:5432/kramerius"
+          - name: "kramerius_connectionUser"
+            value: "fedoraAdmin"
+          - name: "kramerius_connectionPass"
+            value: "fedoraAdmin"
+          - name: "driver_fedora_mpt_jdbc_url"
+            value: "jdbc:postgresql://ri-triples-postgres:5432/riTriples"
+          - name: "driver_fedora_mpt_jdbc_user"
+            value: "fedoraAdmin"
+          - name: "driver_fedora_mpt_jdbc_password"
+            value: "fedoraAdmin"
+          - name: "solrHost"
+            value: "http://solr:8983/solr/kramerius"
+          - name: "applicationUrl"
+            value: "http://localhost:8080/search"
+        ports:
+        - containerPort: 8080
+          name: http
+        volumeMounts:
+        - name: kramerius-import
+          mountPath: /opt/app-root/src/.kramerius4/import     
+      imagePullSecrets:
+       - name: regcred
+      volumes:
+       - name: kramerius-import
+         hostPath:
+            path: /data/import     
+---
+apiVersion: v1               
+kind: Service                
+metadata:                    
+  name: kramerius 
+  labels:                    
+    run: kramerius
+spec:                        
+  type: NodePort
+  selector:                   
+    run: kramerius
+  ports:  
+    - port: 8080
+      nodePort: 30003
+      name: http  
