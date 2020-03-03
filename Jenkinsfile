@@ -9,11 +9,9 @@ node {
 		}
 	}	
     stage('Deploy') {
-        withCredentials([azureServicePrincipal(servicePrincipalId)]) {
             sh """
 				export KUBECONFIG=/var/jenkins_home/admin.conf
 				kubectl get pods
             """
-        }
     }	
 }
