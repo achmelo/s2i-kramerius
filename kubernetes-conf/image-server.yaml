@@ -17,18 +17,13 @@ spec:
       nodeName: docker02
       containers:
       - name: imgserver
-        image: quay.io/wantedly/nginx-image-server:latest     
-        env:
-          - name: "SERVER_NAME"
-            value: "image.nkp.cz"
+        image: bdlss/iipsrv-openjpeg-docker     
         ports:
-        - containerPort: 8090
-          name: http
         - containerPort: 80
           name: tcp
         volumeMounts:
         - name: imgserver-import
-          mountPath: /var/www/nginx/images     
+          mountPath: /var/www/localhost/images     
       volumes:
        - name: imgserver-import
          hostPath:
@@ -45,9 +40,6 @@ spec:
   selector:                   
     run: imgserver
   ports:  
-    - port: 8090
-      nodePort: 30005
-      name: http  
     - port: 80
       nodePort: 30006
       name: tcp  
