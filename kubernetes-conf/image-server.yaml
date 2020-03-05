@@ -1,0 +1,51 @@
+---           
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: imgserver
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+     run: imgserver
+  template:
+    metadata:
+      labels:
+        run: imgserver
+    spec:
+      nodeName: docker02
+      containers:
+      - name: imgserver
+        image: quay.io/wantedly/nginx-image-server:latest     
+        env:
+          - name: "SERVER_NAME"
+            value: "image.nkp.cz"
+        ports:
+        - containerPort: 8090
+          name: http
+        - containerPort: 80
+          name: http
+        volumeMounts:
+        - name: imgserver-import
+          mountPath: /var/www/nginx/images     
+      volumes:
+       - name: imgserver-import
+         hostPath:
+            path: /data/imgserver     
+---
+apiVersion: v1               
+kind: Service                
+metadata:                    
+  name: imgserver 
+  labels:                    
+    run: imgserver
+spec:                        
+  type: NodePort
+  selector:                   
+    run: imgserver
+  ports:  
+    - port: 8090
+      nodePort: 30005
+      name: http  
+      
