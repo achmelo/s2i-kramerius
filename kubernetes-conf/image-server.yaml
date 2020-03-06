@@ -17,13 +17,13 @@ spec:
       nodeName: docker02
       containers:
       - name: imgserver
-        image: bdlss/iipsrv-openjpeg-docker     
+        image: klokantech/iiifserver:latest    
         ports:
         - containerPort: 80
           name: tcp
         volumeMounts:
         - name: imgserver-import
-          mountPath: /var/www/localhost/images     
+          mountPath: /data/imgserver     
       volumes:
        - name: imgserver-import
          hostPath:
