@@ -7,6 +7,8 @@ ENV TOMCAT_VERSION 9.0.31
 ENV CATALINA_HOME /usr/local/tomcat
 ENV JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
 
+https://github.com/ceskaexpedice/kramerius/releases/download/5.4.2/kramerius-5.4.2.zip
+
 # check https://github.com/ceskaexpedice/kramerius/issues/470
 ENV TOMCAT_TGZ_URL https://www.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz
 
@@ -42,11 +44,11 @@ RUN  curl -fSL "$TOMCAT_TGZ_URL" -o tomcat.tar.gz && \
 
 RUN curl -fsL "$JDBC_DRIVER_DOWNLOAD_URL" -o $CATALINA_HOME/lib/postgresql-9.4.1208.jar
 
-RUN curl -fsL  https://github.com/ceskaexpedice/kramerius/releases/download/v5.3.6/kramerius-5.3.6.zip -o /tmp/kramerius-5.3.6.zip && \
-    unzip /tmp/kramerius-5.3.6.zip -d editors  && \
+RUN curl -fsL  https://github.com/ceskaexpedice/kramerius/releases/download/5.4.2/kramerius-5.4.2.zip -o /tmp/kramerius-5.4.2.zip && \
+    unzip /tmp/kramerius-5.4.2.zip -d editors  && \
     mv editors/rightseditor.war $CATALINA_HOME/webapps/ && \
     mv editors/editor.war $CATALINA_HOME/webapps/ && \
-    rm /tmp/kramerius-5.3.6.zip && \
+    rm /tmp/kramerius-5.4.2.zip && \
     rm -rf /tmp/editors
 
 ADD context.xml $CATALINA_HOME/conf/context.xml
