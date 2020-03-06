@@ -1,7 +1,7 @@
 FROM openshift/base-centos7
 
 MAINTAINER Martin Rumanek <martin@rumanek.cz>
-ENV GRADLE_VERSION=2.12
+ENV GRADLE_VERSION=6.2
 ENV TOMCAT_MAJOR 9
 ENV TOMCAT_VERSION 9.0.31
 ENV CATALINA_HOME /usr/local/tomcat
