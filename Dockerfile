@@ -7,7 +7,6 @@ ENV TOMCAT_VERSION 9.0.31
 ENV CATALINA_HOME /usr/local/tomcat
 ENV JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
 
-https://github.com/ceskaexpedice/kramerius/releases/download/5.4.2/kramerius-5.4.2.zip
 
 # check https://github.com/ceskaexpedice/kramerius/issues/470
 ENV TOMCAT_TGZ_URL https://www.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz
