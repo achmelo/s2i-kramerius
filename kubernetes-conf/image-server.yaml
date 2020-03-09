@@ -16,13 +16,13 @@ spec:
     spec:
       nodeName: docker02
       containers:
-      - name: nginx
+      - name: imgserver
         image: moravianlibrary/iipsrv-nginx:mzk-openresty
         env:
           - name: "VIRTUAL_HOST"
-            value: "imgeserver.nkp.cz"   
+            value: "docker02.nkp.cz/"   
           - name: "LETSENCRYPT_HOST"
-            value: "imgeserver.nkp.cz"   
+            value: "docker02.nkp.cz/"   
           - name: "LETSENCRYPT_EMAIL"
             value: "andrej.chmelo@cgi.com"   
           - name: "HTTPS_METHOD"
@@ -33,7 +33,7 @@ spec:
         volumeMounts:
         - name: imgserver-import
           mountPath: /var/www/imageserver/data       
-      - name: imgserver
+      - name: imgsrv
         image: moravianlibrary/iipsrv-imageserver    
         volumeMounts:
         - name: imgserver-import
