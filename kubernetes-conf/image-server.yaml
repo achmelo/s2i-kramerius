@@ -17,7 +17,7 @@ spec:
       nodeName: docker02
       containers:
       - name: imgserver
-        image: klokantech/iiifserver-iipimage-jpeg2000:latest    
+        image: moravianlibrary/iipsrv-nginx    
         ports:
         - containerPort: 80
           name: tcp
