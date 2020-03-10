@@ -37,20 +37,30 @@ spec:
         image: moravianlibrary/iipsrv-imageserver
         env:
           - name: "MEMCACHED_SERVERS"
-            value: "imgsrvr"
+            value: "memcached"
         ports:
         - containerPort: 9000
-          name: http   
-      - name: memcached
-        image: memcached:latest
-        command: ["memcached,"-m", "512", -v"]
-        ports:
-        - containerPort: 80
-          name: http   
+          name: http    
       volumes:
        - name: imgserver-import
          hostPath:
             path: /data/imgserver
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: memcached
+  labels:
+    run: memcached
+spec:
+  nodeName: docker02
+  containers:
+    - name: memcached
+      image:  memcached:latest
+      command: ["memcached", "-m", "512", "-v"]
+      ports:
+        - name: http
+          containerPort: 80
 ---
 apiVersion: v1               
 kind: Service                
@@ -85,7 +95,19 @@ spec:
     port: 9000
     targetPort: 9000
     protocol: TCP
-  - name: mem
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: memcached
+  labels:
+    run: memcached
+spec:
+  type: ClusterIP
+  selector:
+    run: memcached
+  ports:
+  - name: http
     port: 80
     targetPort: 80
     protocol: TCP
