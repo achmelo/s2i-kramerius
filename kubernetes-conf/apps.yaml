@@ -56,9 +56,16 @@ spec:
             value: "fedoraAdmin"
           - name: "RITRIPLES_DB_PASSWORD"
             value: "fedoraAdmin"
+        volumeMounts:
+        - name: fcrepo-pv
+          mountPath: /usr/local/fedora/data/objects
         ports:
         - containerPort: 8080
           name: http
+      volumes:
+       - name: fcrepo-pv
+         hostPath:
+            path: /data/fcrepo 
 ---
 apiVersion: v1               
 kind: Service                

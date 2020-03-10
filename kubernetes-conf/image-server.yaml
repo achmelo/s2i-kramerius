@@ -64,13 +64,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: imgsrv
+  name: imgserver
   labels:
-    service: imgsrv
+    service: imgserver
 spec:
   type: ClusterIP
   selector:
-    service: imgsrv
+    service: imgserver
   ports:
   - name: http
     port: 9000
