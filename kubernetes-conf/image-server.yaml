@@ -16,14 +16,22 @@ spec:
     spec:
       nodeName: docker02
       containers:
-      - name: imgserver
-        image:  klokantech/iiifserver-iipimage-jpeg2000:1.0.0-288
+      - name: iipimage
+        image:  moravianlibrary/iipsrv-imageserver-opj:latest
+        ports:
+        - containerPort: 9000
+          name: tcp
+        volumeMounts:
+        - name: imgserver-import
+          mountPath: /data/import     
+      - name: nginx
+        image:  harbor.nkp.cz:30004/library/nginx:latest
         ports:
         - containerPort: 80
           name: tcp
         volumeMounts:
         - name: imgserver-import
-          mountPath: /data/import          
+          mountPath: /data/import           
       volumes:
        - name: imgserver-import
          hostPath:
@@ -43,3 +51,19 @@ spec:
     - port: 80
       nodePort: 30006
       name: tcp 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: imgserver
+  labels:
+    service: imgserver
+spec:
+  type: ClusterIP
+  selector:
+    service: imgserver
+  ports:
+  - name: tcp
+    port: 9000
+    targetPort: 9000
+    protocol: TCP
