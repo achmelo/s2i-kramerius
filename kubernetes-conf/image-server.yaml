@@ -38,6 +38,7 @@ spec:
         env:
           - name: "MEMCACHED_SERVERS"
             value: "imgsrvr"
+        ports:
         - containerPort: 9000
           name: http   
       - name: memcached
