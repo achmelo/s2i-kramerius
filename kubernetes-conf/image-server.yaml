@@ -34,12 +34,17 @@ spec:
         - name: imgserver-import
           mountPath: /var/www/imageserver/data       
       - name: imgsrv
-        image: moravianlibrary/iipsrv-imageserver    
-        volumeMounts:
-        - name: imgserver-import
-          mountPath: /data     
-        ports:
+        image: moravianlibrary/iipsrv-imageserver
+        env:
+          - name: "MEMCACHED_SERVERS"
+            value: "imgsrvr"
         - containerPort: 9000
+          name: http   
+      - name: memcached
+        image: memcached:latest
+        command: ["memcached,"-m", "512", -v"]
+        ports:
+        - containerPort: 80
           name: http   
       volumes:
        - name: imgserver-import
@@ -78,4 +83,8 @@ spec:
   - name: http
     port: 9000
     targetPort: 9000
-    protocol: TCP            
+    protocol: TCP
+  - name: mem
+    port: 80
+    targetPort: 80
+    protocol: TCP
