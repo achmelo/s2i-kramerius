@@ -40,7 +40,7 @@ spec:
           mountPath: /data     
         ports:
         - containerPort: 9000
-          name: tcp   
+          name: http   
       volumes:
        - name: imgserver-import
          hostPath:
@@ -66,11 +66,11 @@ kind: Service
 metadata:
   name: imgsrvr
   labels:
-    service: imgsrvr
+    run: imgsrvr
 spec:
   type: ClusterIP
   selector:
-    service: imgserver
+    run: imgserver
   ports:
   - name: http
     port: 9000
