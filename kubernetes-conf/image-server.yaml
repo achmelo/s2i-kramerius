@@ -64,9 +64,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: imgserver
+  name: imgsrvr
   labels:
-    service: imgserver
+    service: imgsrvr
 spec:
   type: ClusterIP
   selector:
