@@ -17,13 +17,30 @@ spec:
       nodeName: docker02
       containers:
       - name: imgserver
-        image: klokantech/iiifserver-iipimage-jpeg2000:1.0.0-288
+        image: moravianlibrary/iipsrv-nginx:mzk
+        env:
+          - name: "VIRTUAL_HOST"
+            value: "docker02.nkp.cz/"   
+          - name: "LETSENCRYPT_HOST"
+            value: "docker02.nkp.cz/"   
+          - name: "LETSENCRYPT_EMAIL"
+            value: "andrej.chmelo@cgi.com"   
+          - name: "HTTPS_METHOD"
+            value: "noredirect"   
         ports:
         - containerPort: 80
           name: tcp
         volumeMounts:
         - name: imgserver-import
-          mountPath: /var/www/imageserver/data        
+          mountPath: /var/www/imageserver/data       
+      - name: imgsrv
+        image: moravianlibrary/iipsrv-imageserver    
+        volumeMounts:
+        - name: imgserver-import
+          mountPath: /data     
+        ports:
+        - containerPort: 9000
+          name: tcp   
       volumes:
        - name: imgserver-import
          hostPath:
@@ -43,4 +60,19 @@ spec:
     - port: 80
       nodePort: 30006
       name: tcp  
-            
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: imgsrv
+  labels:
+    service: imgsrv
+spec:
+  type: ClusterIP
+  selector:
+    service: imgsrv
+  ports:
+  - name: http
+    port: 9000
+    targetPort: 9000
+    protocol: TCP            
