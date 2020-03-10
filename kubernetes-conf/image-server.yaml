@@ -23,11 +23,11 @@ spec:
           name: tcp
         volumeMounts:
         - name: imgserver-import
-          mountPath: /data/imgserver          
+          mountPath: /data/import          
       volumes:
        - name: imgserver-import
          hostPath:
-            path: /data/imgserver
+            path: /data/import
 ---
 apiVersion: v1               
 kind: Service                
