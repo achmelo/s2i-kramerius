@@ -27,5 +27,8 @@ RUN mkdir /tmp/kakadu
 
 COPY  ["run", "assemble", "/usr/libexec/s2i/"]
 
+USER 8983
+EXPOSE 9000
 
+CMD ["/usr/libexec/s2i/usage"]
 
