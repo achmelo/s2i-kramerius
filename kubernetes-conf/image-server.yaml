@@ -17,50 +17,17 @@ spec:
       nodeName: docker02
       containers:
       - name: imgserver
-        image: moravianlibrary/iipsrv-nginx:mzk
-        env:
-          - name: "VIRTUAL_HOST"
-            value: "docker02.nkp.cz/"   
-          - name: "LETSENCRYPT_HOST"
-            value: "docker02.nkp.cz/"   
-          - name: "LETSENCRYPT_EMAIL"
-            value: "andrej.chmelo@cgi.com"   
-          - name: "HTTPS_METHOD"
-            value: "noredirect"   
+        image:  klokantech/iiifserver-iipimage-jpeg2000:1.0.0-288
         ports:
         - containerPort: 80
           name: tcp
         volumeMounts:
         - name: imgserver-import
-          mountPath: /var/www/imageserver/data       
-      - name: imgsrv
-        image: moravianlibrary/iipsrv-imageserver
-        env:
-          - name: "MEMCACHED_SERVERS"
-            value: "memcached"
-        ports:
-        - containerPort: 9000
-          name: http    
+          mountPath: /data/imgserver          
       volumes:
        - name: imgserver-import
          hostPath:
             path: /data/imgserver
----
-apiVersion: v1
-kind: Pod
-metadata:
-  name: memcached
-  labels:
-    run: memcached
-spec:
-  nodeName: docker02
-  containers:
-    - name: memcached
-      image:  memcached:latest
-      command: ["memcached", "-m", "512", "-v"]
-      ports:
-        - name: http
-          containerPort: 80
 ---
 apiVersion: v1               
 kind: Service                
@@ -76,38 +43,3 @@ spec:
     - port: 80
       nodePort: 30006
       name: tcp 
-    - port: 9000
-      nodePort: 30008
-      name: http
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: imgsrvr
-  labels:
-    run: imgsrvr
-spec:
-  type: ClusterIP
-  selector:
-    run: imgserver
-  ports:
-  - name: http
-    port: 9000
-    targetPort: 9000
-    protocol: TCP
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: memcached
-  labels:
-    run: memcached
-spec:
-  type: ClusterIP
-  selector:
-    run: memcached
-  ports:
-  - name: http
-    port: 80
-    targetPort: 80
-    protocol: TCP
