@@ -59,7 +59,10 @@ spec:
   ports:  
     - port: 80
       nodePort: 30006
-      name: tcp  
+      name: tcp 
+    - port: 9000
+      nodePort: 30008
+      name: tcp
 ---
 apiVersion: v1
 kind: Service
