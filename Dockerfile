@@ -34,7 +34,7 @@ RUN  ln -sf /usr/local/gradle-$GRADLE_VERSION/bin/gradle /usr/local/bin/gradle
 RUN yum install -y java-1.8.0-openjdk
 RUN yum install -y java-1.8.0-openjdk-devel
 
-COPY javafx-sdk-11.0.2/lib/* /usr/lib/java
+COPY javafx-sdk-11.0.2/lib/ /usr/lib/java/
 
 WORKDIR $CATALINA_HOME
 
