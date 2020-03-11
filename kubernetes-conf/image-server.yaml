@@ -17,7 +17,7 @@ spec:
       nodeName: docker02
       containers:
       - name: iipimage
-        image:  moravianlibrary/iipsrv-imageserver-opj:latest
+        image:  harbor.nkp.cz:30004/library/iipsrv-imageserver-opj:latest
         ports:
         - containerPort: 9000
           name: tcp
@@ -61,7 +61,7 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    service: imgserver
+    run: imgserver
   ports:
   - name: tcp
     port: 9000
