@@ -34,7 +34,7 @@ RUN  ln -sf /usr/local/gradle-$GRADLE_VERSION/bin/gradle /usr/local/bin/gradle
 RUN yum install -y java-1.8.0-openjdk
 RUN yum install -y java-1.8.0-openjdk-devel
 
-COPY javafx-sdk-11.0.2/lib/ /usr/lib/java/
+
 
 WORKDIR $CATALINA_HOME
 
@@ -52,7 +52,7 @@ RUN curl -fsL https://github.com/ceskaexpedice/kramerius/releases/download/5.4.2
     mv editors/editor.war $CATALINA_HOME/webapps/ && \
     rm /tmp/kramerius-5.4.2.zip && \
     rm -rf /tmp/editors
-
+	
 ADD context.xml $CATALINA_HOME/conf/context.xml
 ADD search.xml $CATALINA_HOME/conf/Catalina/localhost/search.xml
 ADD web.xml $CATALINA_HOME/conf/web.xml
@@ -82,6 +82,10 @@ RUN mkdir -p $HOME/.kramerius4/lp/
 RUN chown -R $TOMCAT_USER:$TOMCAT_USER $HOME $CATALINA_HOME
 
 RUN chmod -R ugo+rwx $HOME $CATALINA_HOME
+
+RUN curl -fsL http://archlinux.thaller.ws/extra/os/x86_64/java8-openjfx-8.u202-3-x86_64.pkg.tar.xz -o java8-openjfx-8.tar.xz
+RUN tar xf java8-openjfx-8.tar.xz -C /tmp/
+COPY /tmp/usr/lib/jvm/java-8-openjdk/jre/lib/ext/jfxrt.jar /lib/jvm/java/jre/lib/ext/
 
 USER 8983
 EXPOSE 8080
