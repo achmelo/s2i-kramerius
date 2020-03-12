@@ -83,9 +83,11 @@ RUN chown -R $TOMCAT_USER:$TOMCAT_USER $HOME $CATALINA_HOME
 
 RUN chmod -R ugo+rwx $HOME $CATALINA_HOME
 
-RUN curl -fsL http://archlinux.thaller.ws/extra/os/x86_64/java8-openjfx-8.u202-3-x86_64.pkg.tar.xz -o java8-openjfx-8.tar.xz
-RUN tar xf java8-openjfx-8.tar.xz -C /tmp/
-COPY /tmp/usr/lib/jvm/java-8-openjdk/jre/lib/ext/jfxrt.jar /lib/jvm/java/jre/lib/ext/
+RUN curl -fsL http://archlinux.thaller.ws/extra/os/x86_64/java8-openjfx-8.u202-3-x86_64.pkg.tar.xz -o /tmp/java8-openjfx-8.tar.xz && \
+	tar xf /tmp/java8-openjfx-8.tar.xz -C /tmp/ && \
+	mv /tmp/usr/lib/jvm/java-8-openjdk/jre/lib/ext/jfxrt.jar /lib/jvm/java/jre/lib/ext/ && \
+	rm -rf /tmp/usr
+
 
 USER 8983
 EXPOSE 8080
