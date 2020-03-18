@@ -17,7 +17,7 @@ spec:
       nodeName: docker02
       containers:
       - name: solr
-        image: moravianlibrary/solr:6.3.0
+        image: moravianlibrary/solr:8.0.0-processing-index
         ports:
         - containerPort: 8983
           name: http

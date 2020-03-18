@@ -16,7 +16,7 @@ spec:
     spec:
       nodeName: docker02
       containers:
-      - image: postgres:9.6
+      - image: postgres:12.2
         name: fedora-postgres
         env:
         - name: POSTGRES_USER
@@ -68,7 +68,7 @@ spec:
     spec:
       nodeName: docker02
       containers:
-      - image: postgres:9.6
+      - image: postgres:12.2
         name: kramerius-postgres
         env:
         - name: POSTGRES_USER
@@ -120,7 +120,7 @@ spec:
     spec:
       nodeName: docker02
       containers:
-      - image: postgres:9.6
+      - image: postgres:12.2
         name: ri-triples-postgres
         env:
         - name: POSTGRES_USER
