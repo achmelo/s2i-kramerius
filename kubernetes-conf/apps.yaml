@@ -17,7 +17,7 @@ spec:
       nodeName: docker02
       containers:
       - name: solr
-        image: moravianlibrary/solr:8.0.0-processing-index
+        image: harbor.nkp.cz:30004/library/solr:8.0.0-processing-index
         ports:
         - containerPort: 8983
           name: http
@@ -40,7 +40,7 @@ spec:
       nodeName: docker02
       containers:
       - name: fcrepo
-        image: moravianlibrary/fcrepo:3.8.1
+        image: harbor.nkp.cz:30004/library/fcrepo:3.8.1
         env:
           - name: "FEDORA_PASSWORD"
             value: "fedoraAdmin"
