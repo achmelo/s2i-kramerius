@@ -11,7 +11,7 @@ sleep 5
 
 kubectl apply -f service-zookeeper.yml
 
-kubectl apply -f statefulset-solr.yml
+kubectl apply -f statefulset-solr-cluster.yml
 
 sleep 5
 
