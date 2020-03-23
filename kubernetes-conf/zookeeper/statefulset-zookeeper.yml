@@ -1,0 +1,90 @@
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: zk
+spec:
+  selector:
+    matchLabels:
+      app: zookeeper-app # has to match .spec.template.metadata.labels
+  serviceName: "zkensemble"
+  replicas: 1 # by default is 1
+  template:
+    metadata:
+      labels:
+        app: zookeeper-app # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 10
+      restartPolicy: Always
+      containers:
+      - name: zookeeper
+        image: zookeeper:3.4.14
+        imagePullPolicy: IfNotPresent
+        command: 
+        - "/bin/sh"
+        - "-c"
+        - "if [ ! -d $ZOO_DATA_DIR ] ; then mkdir -p $ZOO_DATA_DIR ; chmod 777 $ZOO_DATA_DIR ; else touch /conf/test; fi && \
+           if [ ! -d $ZOO_LOG_DIR ] ; then mkdir -p $ZOO_LOG_DIR ; chmod 777 $ZOO_LOG_DIR ; else touch /conf/test; fi && \
+           if [ ! -d $ZOO_DATA_LOG_DIR ] ; then mkdir -p $ZOO_DATA_LOG_DIR ; chmod 777 $ZOO_DATA_LOG_DIR ; else touch /conf/test; fi && \
+           if [ ! -f $ZOO_DATA_DIR/myid ] ; then $(echo $((${HOSTNAME##*-}+1)) > $ZOO_DATA_DIR/myid ) else touch /conf/test; fi && \
+           /docker-entrypoint.sh zkServer.sh start-foreground"
+        readinessProbe:
+          tcpSocket:
+            port: 2181
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: 2181
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        volumeMounts:
+        - name: volzookeeper
+          mountPath: /store
+        ports:
+        - name: zkport
+          containerPort: 2181
+        - name: zkportpeers
+          containerPort: 2888
+        - name: zkportelection
+          containerPort: 3888
+        env:
+          - name: MY_POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: MY_POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: MY_POD_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+          - name: ZOO_LOG_DIR
+            valueFrom:
+              configMapKeyRef:
+                name: zookeeper-config
+                key: zooLogDir
+          - name: ZOO_DATA_DIR
+            valueFrom:
+              configMapKeyRef:
+                name: zookeeper-config
+                key: zooDataDir
+          - name: ZOO_DATA_LOG_DIR
+            valueFrom:
+              configMapKeyRef:
+                name: zookeeper-config
+                key: zooDataLogDir
+          - name: ZOO_LOG4J_PROP
+            valueFrom:
+              configMapKeyRef:
+                name: zookeeper-config
+                key: zooLog4jProp
+  volumeClaimTemplates:
+  - metadata:
+      name: volzookeeper
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Gi
