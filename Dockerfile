@@ -45,6 +45,7 @@ RUN  curl -fSL "$TOMCAT_TGZ_URL" -o tomcat.tar.gz && \
 
 RUN curl -fsL "$JDBC_DRIVER_DOWNLOAD_URL" -o $CATALINA_HOME/lib/postgresql-9.4.1208.jar
 
+#kopirovanie je mozne pouzit v pripade ze je download z github nefunkcnys
 #COPY kramerius-5.4.2.zip /tmp/kramerius-5.4.2.zip && \
 RUN curl -fsL https://github.com/ceskaexpedice/kramerius/releases/download/5.4.2/kramerius-5.4.2.zip -o /tmp/kramerius-5.4.2.zip && \
     unzip /tmp/kramerius-5.4.2.zip -d editors  && \

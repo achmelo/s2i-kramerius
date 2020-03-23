@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: solr-ingress
+spec:
+  rules:
+  - host: docker02.nkp.cz
+    http:
+      paths:
+      - path: /solr
+        backend:
+          serviceName: solr
+          servicePort: 8983
