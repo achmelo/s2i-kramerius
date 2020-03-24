@@ -13,3 +13,19 @@ spec:
   - port: 8983               
     targetPort: 8983
     protocol: TCP   
+---
+apiVersion: v1               
+kind: Service                
+metadata:                    
+  name: solr-np 
+  namespace: zk-solr-ha
+  labels:                    
+    app: solr-app
+spec:                        
+  type: NodePort
+  selector:                   
+    app: solr-app
+  ports:  
+    - port: 8983
+      nodePort: 30983
+      name: http
