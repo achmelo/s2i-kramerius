@@ -8,7 +8,7 @@ kubectl delete svc solrcluster
 kubectl delete svc zk-service
 kubectl delete svc zkensemble
 
-kubectl delete configmap solr-config 
+kubectl delete configmap solr-config /
 kubectl delete configmap zookeeper-config 
 
 

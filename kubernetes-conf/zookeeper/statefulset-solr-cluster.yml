@@ -125,6 +125,7 @@ spec:
   - metadata:
       name: volsolr
     spec:
+      storageClassName: nfs
       accessModes: [ "ReadWriteOnce" ]
       resources:
         requests:
