@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: solrcluster
+  namespace: zk-solr-ha
   labels:
     app: solr-app
 spec:
