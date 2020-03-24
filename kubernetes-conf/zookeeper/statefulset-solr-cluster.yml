@@ -33,7 +33,7 @@ spec:
           periodSeconds: 20
         volumeMounts:
         - name: volsolr
-          mountPath: /store
+          mountPath: /val/solr
         ports:
         - name: solrport
           containerPort: 8983
