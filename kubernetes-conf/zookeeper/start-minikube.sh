@@ -15,7 +15,7 @@ kubectl apply -f statefulset-solr-cluster.yml
 
 sleep 5
 
-kubectl apply -f service-solr.yml
+kubectl apply -f service-solr-cluster.yml
 
 kubectl get pod
 kubectl get deployment
