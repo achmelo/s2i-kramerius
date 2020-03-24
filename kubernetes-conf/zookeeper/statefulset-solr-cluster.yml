@@ -76,37 +76,6 @@ spec:
               configMapKeyRef:
                 name: solr-cluster-config
                 key: solrHeap
-      initContainers:
-      - name: init-solr-data
-        image: busybox
-        command:
-        - "/bin/sh"
-        - "-c"
-        - "if [ ! -d $SOLR_HOME/lib ] ; then mkdir -p $SOLR_HOME/lib && chown -R 8983:8983 $SOLR_HOME ; else true; fi"
-        env:
-          - name: SOLR_HOME
-            valueFrom:
-              configMapKeyRef:
-                name: solr-cluster-config
-                key: solrHome
-        volumeMounts:
-        - name: volsolr
-          mountPath: /store
-      - name: init-solr-logs
-        image: busybox
-        command:
-        - "/bin/sh"
-        - "-c"
-        - "if [ ! -d $SOLR_LOGS_DIR ] ; then mkdir -p $SOLR_LOGS_DIR && chown 8983:8983 $SOLR_LOGS_DIR ; else true; fi"
-        env:
-          - name: SOLR_LOGS_DIR
-            valueFrom:
-              configMapKeyRef:
-                name: solr-cluster-config
-                key: solrLogsDir
-        volumeMounts:
-        - name: volsolr
-          mountPath: /store
       imagePullSecrets:
        - name: regcred
       volumes:
