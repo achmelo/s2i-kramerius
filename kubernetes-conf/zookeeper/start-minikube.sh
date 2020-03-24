@@ -1,15 +1,6 @@
 #!/bin/bash
 
-kubectl create configmap solr-config --from-env-file=solr-config.properties 
-kubectl create configmap zookeeper-config --from-env-file=zookeeper-config.properties 
-
-kubectl get configmap
-
-kubectl apply -f statefulset-zookeeper.yml
-
-sleep 5
-
-kubectl apply -f service-zookeeper.yml
+kubectl create configmap solr-cluster-config --namespace=zk-solr-ha --from-env-file=solr-config.properties 
 
 kubectl apply -f statefulset-solr-cluster.yml
 

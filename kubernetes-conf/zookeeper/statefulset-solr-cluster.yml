@@ -19,7 +19,7 @@ spec:
       restartPolicy: Always
       containers:
       - name: solr
-        image: solr:8.1.1
+        image: harbor.nkp.cz:30004/library/solr:8.0.0-processing-index
         imagePullPolicy: IfNotPresent
         readinessProbe:
           tcpSocket:
@@ -108,7 +108,7 @@ spec:
         - name: volsolr
           mountPath: /store
       - name: init-solr-xml
-        image: solr:8.1.1
+        image: harbor.nkp.cz:30004/library/solr:8.0.0-processing-index
         command: 
         - "/bin/sh"
         - "-c"
@@ -123,6 +123,8 @@ spec:
         volumeMounts:
         - name: volsolr
           mountPath: /store
+      imagePullSecrets:
+       - name: regcred
       volumes:
        - name: volsolr
          hostPath:
