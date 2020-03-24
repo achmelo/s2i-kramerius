@@ -1,6 +1,6 @@
-FROM solr:8.0.0-alpine
+FROM solr:8.1.1
 
-MAINTAINER Aleksei Ermak <aleksei@ermak.cz>
+MAINTAINER Andrej Chmelo <andrej.chmelo@cgi.com>
 
 USER root
 ADD lib/ /var/solr/data/lib/
@@ -10,4 +10,3 @@ ADD oai/ /var/solr/data/oai
 RUN chown -R $SOLR_USER:$SOLR_USER /kramerius
 USER $SOLR_USER
 
-CMD docker-entrypoint.sh solr-precreate  kramerius /kramerius
