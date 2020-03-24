@@ -77,3 +77,49 @@ spec:
        - name: volsolr
          hostPath:
             path: /data/volsolr 
+---           
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: solr
+  namespace: zk-solr-ha
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+     run: solr
+  template:
+    metadata:
+      labels:
+        run: solr
+    spec:
+      nodeName: docker02
+      containers:
+      - name: solr
+        image: harbor.nkp.cz:30004/library/solr:8.0.0-processing-index
+        ports:
+        - containerPort: 8983
+          name: http
+        env:
+          - name: SOLR_HOME
+            valueFrom:
+              configMapKeyRef:
+                name: solr-cluster-config
+                key: solrHome
+          - name: ZK_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: solr-cluster-config
+                key: zkHost
+          - name: POD_HOST_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: SOLR_HOST
+            value: "$(POD_HOST_NAME).solrcluster"
+          - name: SOLR_HEAP
+            valueFrom:
+              configMapKeyRef:
+                name: solr-cluster-config
+                key: solrHeap
