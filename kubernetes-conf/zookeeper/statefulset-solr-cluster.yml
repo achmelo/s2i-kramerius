@@ -66,74 +66,14 @@ spec:
                 fieldPath: metadata.name
           - name: SOLR_HOST
             value: "$(POD_HOST_NAME).solrcluster"
-          - name: SOLR_LOGS_DIR
-            valueFrom:
-              configMapKeyRef:
-                name: solr-cluster-config
-                key: solrLogsDir
           - name: SOLR_HEAP
             valueFrom:
               configMapKeyRef:
                 name: solr-cluster-config
                 key: solrHeap
-      initContainers:
-      - name: init-solr-data
-        image: busybox
-        command:
-        - "/bin/sh"
-        - "-c"
-        - "if [ ! -d $SOLR_HOME/lib ] ; then mkdir -p $SOLR_HOME/lib && chown -R 8983:8983 $SOLR_HOME ; else true; fi"
-        env:
-          - name: SOLR_HOME
-            valueFrom:
-              configMapKeyRef:
-                name: solr-cluster-config
-                key: solrHome
-        volumeMounts:
-        - name: volsolr
-          mountPath: /var/solr
-      - name: init-solr-logs
-        image: busybox
-        command:
-        - "/bin/sh"
-        - "-c"
-        - "if [ ! -d $SOLR_LOGS_DIR ] ; then mkdir -p $SOLR_LOGS_DIR && chown 8983:8983 $SOLR_LOGS_DIR ; else true; fi"
-        env:
-          - name: SOLR_LOGS_DIR
-            valueFrom:
-              configMapKeyRef:
-                name: solr-cluster-config
-                key: solrLogsDir
-        volumeMounts:
-        - name: volsolr
-          mountPath: /store
       imagePullSecrets:
        - name: regcred
       volumes:
        - name: volsolr
          hostPath:
             path: /data/volsolr 
----           
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: solr
-  namespace: zk-solr-ha
-spec:
-  strategy:
-    type: Recreate
-  selector:
-    matchLabels:
-     run: solr
-  template:
-    metadata:
-      labels:
-        run: solr
-    spec:
-      nodeName: docker02
-      containers:
-      - name: solr
-        image: harbor.nkp.cz:30004/library/solr:8.0.0-processing-index
-        ports:
-        - containerPort: 8983
-          name: http
