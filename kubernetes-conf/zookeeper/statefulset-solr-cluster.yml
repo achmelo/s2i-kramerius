@@ -107,17 +107,6 @@ spec:
         volumeMounts:
         - name: volsolr
           mountPath: /store
-      - name: init-solr-xml
-        image: harbor.nkp.cz:30004/library/solr:8.0.0-processing-index
-        env:
-          - name: SOLR_HOME
-            valueFrom:
-              configMapKeyRef:
-                name: solr-cluster-config
-                key: solrHome
-        volumeMounts:
-        - name: volsolr
-          mountPath: /store
       imagePullSecrets:
        - name: regcred
       volumes:
