@@ -1,27 +1,15 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: solrcluster
+apiVersion: v1               
+kind: Service                
+metadata:                    
+  name: solr-service 
   namespace: zk-solr-ha
-  labels:
+  labels:                    
     app: solr-app
-spec:
-  clusterIP: None
-  selector:
+spec:                        
+  type: ClusterIP
+  selector:                   
     app: solr-app
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: solr-service
-  namespace: zk-solr-ha
-  labels:
-    app: solr-app
-spec:
-  ports:
-  - protocol: TCP
-    port: 8983
+  ports:                                   
+  - port: 8983               
     targetPort: 8983
-  type: LoadBalancer
-  selector:
-    app: solr-app
+    protocol: TCP   
