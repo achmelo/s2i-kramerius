@@ -20,11 +20,11 @@ metadata:
   name: solr-np 
   namespace: zk-solr-ha
   labels:                    
-    app: solr-app
+    run: solr
 spec:                        
   type: NodePort
   selector:                   
-    app: solr-app
+    run: solr
   ports:  
     - port: 8983
       nodePort: 30983
