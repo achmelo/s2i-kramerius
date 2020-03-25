@@ -14,6 +14,7 @@ spec:
       labels:
         app: zookeeper-app # has to match .spec.selector.matchLabels
     spec:
+      nodeName: docker02
       terminationGracePeriodSeconds: 10
       restartPolicy: Always
       containers:
@@ -81,11 +82,7 @@ spec:
               configMapKeyRef:
                 name: zookeeper-config
                 key: zooLog4jProp
-  volumeClaimTemplates:
-  - metadata:
-      name: volzookeeper
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      resources:
-        requests:
-          storage: 10Gi
+      volumes:
+       - name: volzookeeper
+         hostPath:
+            path: /data/volzookeeper 
