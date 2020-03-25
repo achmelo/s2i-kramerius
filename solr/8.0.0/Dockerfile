@@ -4,7 +4,7 @@ MAINTAINER Andrej Chmelo <andrej.chmelo@cgi.com>
 
 USER root
 ADD lib/ /var/solr/data/lib/
-ADD kramerius /kramerius
+ADD kramerius /var/solr/data/kramerius
 ADD oai/ /var/solr/data/oai
 
 RUN chown -R $SOLR_USER:$SOLR_USER /kramerius
