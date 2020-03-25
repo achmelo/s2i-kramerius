@@ -2,11 +2,12 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: zk
+  namespace: zk-solr-ha
 spec:
   selector:
     matchLabels:
       app: zookeeper-app # has to match .spec.template.metadata.labels
-  serviceName: "zkensemble"
+  serviceName: "my-release-zookeeper"
   replicas: 1 # by default is 1
   template:
     metadata:
