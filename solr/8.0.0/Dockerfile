@@ -7,6 +7,6 @@ ADD lib/ /var/solr/data/lib/
 ADD kramerius /kramerius
 ADD oai/ /var/solr/data/oai
 
-RUN chown -R $SOLR_USER:$SOLR_USER /var/solr/data/kramerius
+RUN chown -R $SOLR_USER:$SOLR_USER /kramerius
 USER $SOLR_USER
 
