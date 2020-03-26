@@ -149,7 +149,7 @@ spec:
           - name: "driver_fedora_mpt_jdbc_password"
             value: "fedoraAdmin"
           - name: "solrHost"
-            value: "http://solr:8983/solr/kramerius"
+            value: "http://docker02.nkp.cz:30983/solr/kramerius"
           - name: "applicationUrl"
             value: "http://localhost:8080/search"
         ports:
