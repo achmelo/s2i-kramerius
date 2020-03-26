@@ -19,7 +19,7 @@ spec:
       restartPolicy: Always
       containers:
       - name: solr
-        image: harbor.nkp.cz:30004/library/solr:8.1.1
+        image: harbor.nkp.cz:30004/library/solr:8.1.2
         imagePullPolicy: IfNotPresent
         readinessProbe:
           tcpSocket:
