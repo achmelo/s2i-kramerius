@@ -6,7 +6,8 @@ USER root
 ADD lib/ /var/solr/data/lib/
 ADD kramerius /kramerius
 ADD oai/ /var/solr/data/oai
+ADD krameriusconf /opt/solr-8.1.1/server/solr/configsets/krameriusconf
 
-RUN chown -R $SOLR_USER:$SOLR_USER /kramerius
+RUN chown -R $SOLR_USER:$SOLR_USER /kramerius /opt/solr-8.1.1/server/solr/configsets/krameriusconf
 USER $SOLR_USER
 
