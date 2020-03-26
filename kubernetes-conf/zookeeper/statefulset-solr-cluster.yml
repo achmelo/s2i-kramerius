@@ -31,9 +31,6 @@ spec:
             port: 8983
           initialDelaySeconds: 15
           periodSeconds: 20
-        volumeMounts:
-        - name: volsolr
-          mountPath: /var/solr
         ports:
         - name: solrport
           containerPort: 8983
@@ -73,7 +70,4 @@ spec:
                 key: solrHeap
       imagePullSecrets:
        - name: regcred
-      volumes:
-       - name: volsolr
-         hostPath:
-            path: /data/volsolr 
+
