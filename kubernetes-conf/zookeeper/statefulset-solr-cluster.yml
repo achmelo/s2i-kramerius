@@ -20,7 +20,7 @@ spec:
       containers:
       - name: solr
         image: harbor.nkp.cz:30004/library/solr:8.1.4
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         readinessProbe:
           tcpSocket:
             port: 8983
