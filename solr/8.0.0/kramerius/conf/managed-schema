@@ -51,8 +51,7 @@
             <analyzer type="index">
                 <tokenizer class="solr.StandardTokenizerFactory"/>
                 <filter class="solr.LowerCaseFilterFactory"/>
-                <filter class="solr.HunspellStemFilterFactory" dictionary="cs_CZ.dic" affix="cs_CZ.aff"
-                        ignoreCase="true"/>
+        
 
                 <filter class="solr.ASCIIFoldingFilterFactory"/>
                 <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
@@ -61,8 +60,7 @@
             <analyzer type="query">
                 <tokenizer class="solr.StandardTokenizerFactory"/>
                 <filter class="solr.LowerCaseFilterFactory"/>
-                <filter class="solr.HunspellStemFilterFactory" dictionary="cs_CZ.dic" affix="cs_CZ.aff"
-                        ignoreCase="true"/>
+               
 
                 <filter class="solr.ASCIIFoldingFilterFactory"/>
                 <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
@@ -78,8 +76,7 @@
                    <filter class="solr.LowerCaseFilterFactory"/>
                 <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords_cz.txt"/>
 
-                <filter class="solr.HunspellStemFilterFactory" dictionary="cs_CZ.dic" affix="cs_CZ.aff"
-                        ignoreCase="true"/>
+              
 
                 <filter class="solr.ASCIIFoldingFilterFactory"/>
                 <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
@@ -90,8 +87,7 @@
                 <filter class="solr.LowerCaseFilterFactory"/>
                 <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords_cz.txt"/>
 
-                <filter class="solr.HunspellStemFilterFactory" dictionary="cs_CZ.dic" affix="cs_CZ.aff"
-                        ignoreCase="true"/>
+              
 
                 <filter class="solr.ASCIIFoldingFilterFactory"/>
                 <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
@@ -111,8 +107,7 @@
                 <filter class="solr.ASCIIFoldingFilterFactory"/>
                 <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords_cz_ascii.txt"/>
 
-                <filter class="solr.HunspellStemFilterFactory" dictionary="cs_CZ_ascii.dic" affix="cs_CZ_ascii.aff"
-                        ignoreCase="true"/>
+                
 
                 <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
 
@@ -122,8 +117,7 @@
                 <filter class="solr.LowerCaseFilterFactory"/>
                 <filter class="solr.ASCIIFoldingFilterFactory"/>
                 <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords_cz_ascii.txt"/>
-                <filter class="solr.HunspellStemFilterFactory" dictionary="cs_CZ_ascii.dic" affix="cs_CZ_ascii.aff"
-                        ignoreCase="true"/>
+              
                 <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
 
             </analyzer>
